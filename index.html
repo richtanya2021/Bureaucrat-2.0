@@ -3,130 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Бюрократ | Инженерная эстетика смыслов</title>
+    <title>БЮРОКРАТ | Система управления процессами</title>
     <style>
         :root {
-            --dark-ebony: #1a1a1a;
-            --walnut: #4d3a2b;
-            --oak: #8c7355;
-            --cream: #f5f5f0;
-            --gold-accent: #c5a059;
+            --bg-main: #f8f9fa;
+            --sidebar-bg: #ffffff;
+            --accent-blue: #0052cc;
+            --text-primary: #172b4d;
+            --text-secondary: #6b778c;
+            --border-color: #dfe1e6;
+            --success: #36b37e;
         }
 
+        * { box-sizing: border-box; }
+
         body {
-            background-color: var(--dark-ebony);
-            color: var(--cream);
-            font-family: 'Georgia', serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             display: flex;
+            height: 100vh;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+        }
+
+        /* Боковая панель */
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .logo-area {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+        }
+
+        nav { display: flex; flex-direction: column; gap: 10px; }
+
+        .nav-item {
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-item:hover { background: #ebecf0; color: var(--text-primary); }
+        .nav-item.active { background: #deebff; color: var(--accent-blue); font-weight: 600; }
+
+        /* Основной контент */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
         }
 
         header {
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--walnut);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
-        .logo {
-            font-size: 2.5rem;
-            letter-spacing: 0.2rem;
+        h1 { margin: 0; font-size: 1.8rem; font-weight: 600; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .card-label { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; }
+        .card-value { font-size: 1.5rem; font-weight: 700; margin-top: 10px; }
+
+        /* Таблица / Список */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            text-align: left;
+            background: #f4f5f7;
+            padding: 15px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .status-pill {
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 700;
             text-transform: uppercase;
-            color: var(--gold-accent);
-            margin: 0;
         }
 
-        .subtitle {
-            font-style: italic;
-            color: var(--oak);
-            margin-top: 10px;
-        }
+        .status-active { background: #e3fcef; color: #006644; }
+        .status-pending { background: #fff7e6; color: #824d00; }
 
-        main {
-            flex: 1;
-            max-width: 800px;
-            margin: 60px auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-
-        .status-card {
-            background: linear-gradient(145deg, #222, #1a1a1a);
-            border: 1px solid var(--walnut);
-            padding: 40px;
+        .action-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
             border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            cursor: pointer;
+            font-size: 0.9rem;
         }
 
-        h2 {
-            color: var(--gold-accent);
-            font-weight: normal;
-            border-bottom: 1px dotted var(--oak);
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        .description {
-            font-size: 1.1rem;
-            margin: 30px 0;
-            color: #ccc;
-        }
-
-        .nav-links {
-            margin-top: 40px;
-        }
-
-        .btn {
-            text-decoration: none;
-            color: var(--cream);
-            border: 1px solid var(--oak);
-            padding: 12px 30px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            background-color: var(--oak);
-            color: var(--dark-ebony);
-        }
-
-        footer {
-            padding: 30px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--walnut);
-            border-top: 1px solid var(--walnut);
-        }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1 class="logo">Бюрократ</h1>
-        <div class="subtitle">Архитектура смыслов и порядок в деталях</div>
-    </header>
+    <aside class="sidebar">
+        <div class="logo-area">БЮРОКРАТ</div>
+        <nav>
+            <div class="nav-item active" onclick="showSection('overview', this)">Обзор системы</div>
+            <div class="nav-item" onclick="showSection('documents', this)">Реестр документов</div>
+            <div class="nav-item" onclick="showSection('analytics', this)">Аналитика</div>
+            <div class="nav-item" onclick="showSection('settings', this)">Настройки</div>
+        </nav>
+    </aside>
 
-    <main>
-        <div class="status-card">
-            <h2>Тестирование системы</h2>
-            <p class="description">
-                Проект находится в стадии активной разработки. <br>
-                Мы проектируем пространство, где каждый миллиметр смысла обоснован.
-            </p>
-            
-            <div class="nav-links">
-                <a href="#" class="btn">Документация</a>
+    <main class="content">
+        <div id="overview" class="section">
+            <header>
+                <h1>Обзор процессов</h1>
+                <button class="action-btn" onclick="alert('Запуск нового процесса...')">Создать объект</button>
+            </header>
+
+            <div class="stats-grid">
+                <div class="card">
+                    <div class="card-label">Активные задачи</div>
+                    <div class="card-value">12</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">На согласовании</div>
+                    <div class="card-value">5</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">Среднее время</div>
+                    <div class="card-value">4.2 ч.</div>
+                </div>
             </div>
+
+            <h3>Последние изменения</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Наименование объекта</th>
+                        <th>Статус</th>
+                        <th>Дата</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#00124</td>
+                        <td>Проверка входящей корреспонденции</td>
+                        <td><span class="status-pill status-active">Активен</span></td>
+                        <td>03.05.2026</td>
+                    </tr>
+                    <tr>
+                        <td>#00123</td>
+                        <td>Анализ ресурсной базы</td>
+                        <td><span class="status-pill status-pending">Ожидание</span></td>
+                        <td>02.05.2026</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="documents" class="section hidden">
+            <h1>Реестр документов</h1>
+            <p>Здесь будет логика управления файлами и записями проекта.</p>
+        </div>
+
+        <div id="analytics" class="section hidden">
+            <h1>Аналитика</h1>
+            <p>Визуализация эффективности работы системы.</p>
+        </div>
+
+        <div id="settings" class="section hidden">
+            <h1>Настройки</h1>
+            <p>Конфигурация параметров проекта «Бюрократ».</p>
         </div>
     </main>
 
-    <footer>
-        &copy; 2026 Бюрократ. Все зазоры выверены.
-    </footer>
-
+    <script>
+        function showSection(sectionId, element) {
+            // Скрываем все секции
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            // Убираем активный класс у навигации
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // Показываем нужную
+            document.getElementById(sectionId).classList.remove('hidden');
+            element.classList.add('active');
+        }
+    </script>
 </body>
 </html>
