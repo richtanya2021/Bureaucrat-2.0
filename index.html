@@ -2,170 +2,336 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Проект "Бюрократ" — Составление обращения в администрацию</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Бюрократ — Генератор обращений</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 720px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      background-color: #f7f7f7;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #f7f7f7;
       color: #222;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 1rem;
+    h1 { text-align: center; }
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     label {
       display: block;
-      margin-top: 1rem;
-      font-weight: bold;
+      margin-top: 14px;
+      font-weight: 700;
     }
-    select, input[type="text"], textarea {
+    input, select, textarea {
       width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.3rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
       box-sizing: border-box;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    textarea { min-height: 140px; resize: vertical; }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    button, a.btn {
+      border: none;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
     }
     button {
-      margin-top: 1.5rem;
-      padding: 0.7rem 1.2rem;
-      font-size: 1.1rem;
-      cursor: pointer;
-      border: none;
-      border-radius: 4px;
-      background-color: #004aad;
-      color: white;
+      background: #0b57d0;
+      color: #fff;
     }
-    .output {
-      margin-top: 2rem;
-      padding: 1rem;
-      background: #fff;
-      border-radius: 4px;
-      border: 1px solid #ccc;
+    .secondary {
+      background: #e8eef8;
+      color: #0b57d0;
+    }
+    pre {
       white-space: pre-wrap;
-      font-family: Consolas, monospace;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+      overflow-x: auto;
     }
-    footer {
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #555;
-      text-align: center;
-    }
+    small { color: #666; }
   </style>
 </head>
 <body>
-  <h1>Проект "Бюрократ"</h1>
-  <p>Составьте образец письма в местную администрацию для очистки кладбища от поваленных деревьев.</p>
+  <h1>Бюрократ</h1>
+  <div class="card">
+    <form id="docForm">
+      <div class="row">
+        <div>
+          <label for="region">Регион РФ</label>
+          <select id="region" required>
+            <option value="">-- выберите регион --</option>
+            <option value="moscow">Москва</option>
+            <option value="saint-petersburg">Санкт-Петербург</option>
+            <option value="sevastopol">Севастополь</option>
 
-  <form id="requestForm">
-    <label for="region">Выберите регион:</label>
-    <select id="region" name="region" required>
-      <option value="" disabled selected>-- Выберите регион --</option>
-      <option value="moscow">Москва</option>
-      <option value="tatarstan">Республика Татарстан</option>
-      <option value="lenoblast">Ленинградская область</option>
-      <option value="novosibirsk">Новосибирская область</option>
-      <!-- Можно добавить больше регионов -->
-    </select>
+            <option value="adygea">Республика Адыгея</option>
+            <option value="altai-republic">Республика Алтай</option>
+            <option value="bashkortostan">Республика Башкортостан</option>
+            <option value="buryatia">Республика Бурятия</option>
+            <option value="dagestan">Республика Дагестан</option>
+            <option value="ingushetia">Республика Ингушетия</option>
+            <option value="kabardino-balkaria">Кабардино-Балкарская Республика</option>
+            <option value="kalmykia">Республика Калмыкия</option>
+            <option value="karachay-cherkessia">Карачаево-Черкесская Республика</option>
+            <option value="karelia">Республика Карелия</option>
+            <option value="komi">Республика Коми</option>
+            <option value="crimea">Республика Крым</option>
+            <option value="mari-el">Республика Марий Эл</option>
+            <option value="mordovia">Республика Мордовия</option>
+            <option value="sakha">Республика Саха (Якутия)</option>
+            <option value="north-ossetia">Республика Северная Осетия — Алания</option>
+            <option value="tatarstan">Республика Татарстан</option>
+            <option value="tuva">Республика Тыва</option>
+            <option value="udmurtia">Удмуртская Республика</option>
+            <option value="khakassia">Республика Хакасия</option>
+            <option value="chechnya">Чеченская Республика</option>
+            <option value="chuvashia">Чувашская Республика</option>
 
-    <label for="userName">Ваше ФИО:</label>
-    <input type="text" id="userName" name="userName" placeholder="Иванов Иван Иванович" required />
+            <option value="altai-krai">Алтайский край</option>
+            <option value="zabaykalsky-krai">Забайкальский край</option>
+            <option value="kamchatka-krai">Камчатский край</option>
+            <option value="krasnodar-krai">Краснодарский край</option>
+            <option value="krasnoyarsk-krai">Красноярский край</option>
+            <option value="perm-krai">Пермский край</option>
+            <option value="primorsky-krai">Приморский край</option>
+            <option value="stavropol-krai">Ставропольский край</option>
+            <option value="khabarovsk-krai">Хабаровский край</option>
 
-    <label for="userAddress">Ваш адрес:</label>
-    <input type="text" id="userAddress" name="userAddress" placeholder="ул. Пушкина, д. 10, кв. 5" required />
+            <option value="amur-oblast">Амурская область</option>
+            <option value="arkhangelsk-oblast">Архангельская область</option>
+            <option value="astrakhan-oblast">Астраханская область</option>
+            <option value="belgorod-oblast">Белгородская область</option>
+            <option value="bryansk-oblast">Брянская область</option>
+            <option value="vladimir-oblast">Владимирская область</option>
+            <option value="volgograd-oblast">Волгоградская область</option>
+            <option value="vologda-oblast">Вологодская область</option>
+            <option value="voronezh-oblast">Воронежская область</option>
+            <option value="ivanovo-oblast">Ивановская область</option>
+            <option value="irkutsk-oblast">Иркутская область</option>
+            <option value="kaliningrad-oblast">Калининградская область</option>
+            <option value="kaluga-oblast">Калужская область</option>
+            <option value="kemerovo-oblast">Кемеровская область — Кузбасс</option>
+            <option value="kirov-oblast">Кировская область</option>
+            <option value="kostroma-oblast">Костромская область</option>
+            <option value="kursk-oblast">Курская область</option>
+            <option value="leningrad-oblast">Ленинградская область</option>
+            <option value="lipetsk-oblast">Липецкая область</option>
+            <option value="magadan-oblast">Магаданская область</option>
+            <option value="moscow-oblast">Московская область</option>
+            <option value="murmansk-oblast">Мурманская область</option>
+            <option value="nizhny-novgorod-oblast">Нижегородская область</option>
+            <option value="novgorod-oblast">Новгородская область</option>
+            <option value="novosibirsk-oblast">Новосибирская область</option>
+            <option value="omsk-oblast">Омская область</option>
+            <option value="orenburg-oblast">Оренбургская область</option>
+            <option value="oryol-oblast">Орловская область</option>
+            <option value="penza-oblast">Пензенская область</option>
+            <option value="pskov-oblast">Псковская область</option>
+            <option value="rostov-oblast">Ростовская область</option>
+            <option value="ryazan-oblast">Рязанская область</option>
+            <option value="saratov-oblast">Саратовская область</option>
+            <option value="sakhalin-oblast">Сахалинская область</option>
+            <option value="sverdlovsk-oblast">Свердловская область</option>
+            <option value="smolensk-oblast">Смоленская область</option>
+            <option value="tambov-oblast">Тамбовская область</option>
+            <option value="tver-oblast">Тверская область</option>
+            <option value="tomsk-oblast">Томская область</option>
+            <option value="tula-oblast">Тульская область</option>
+            <option value="tyumen-oblast">Тюменская область</option>
+            <option value="ulyanovsk-oblast">Ульяновская область</option>
+            <option value="vladimir-oblast">Владимирская область</option>
+            <option value="chelyabinsk-oblast">Челябинская область</option>
+            <option value="yaroslavl-oblast">Ярославская область</option>
+            <option value="zaporozhye-oblast">Запорожская область</option>
+            <option value="kherson-oblast">Херсонская область</option>
 
-    <label for="cemeteryName">Наименование кладбища:</label>
-    <input type="text" id="cemeteryName" name="cemeteryName" placeholder="Пример: Городское кладбище №3" required />
+            <option value="khanty-mansi-ao">Ханты-Мансийский автономный округ — Югра</option>
+            <option value="nenets-ao">Ненецкий автономный округ</option>
+            <option value="chukotka-ao">Чукотский автономный округ</option>
+            <option value="yamalo-nenets-ao">Ямало-Ненецкий автономный округ</option>
 
-    <button type="submit">Сформировать макет письма</button>
-  </form>
+            <option value="donetsk-pr">Донецкая Народная Республика</option>
+            <option value="lugansk-pr">Луганская Народная Республика</option>
+          </select>
+        </div>
 
-  <div class="output" id="letterOutput" hidden></div>
+        <div>
+          <label for="docType">Тип документа</label>
+          <select id="docType" required>
+            <option value="">-- выберите тип --</option>
+            <option value="statement">Заявление</option>
+            <option value="complaint">Жалоба</option>
+            <option value="request">Запрос</option>
+            <option value="appeal">Обращение</option>
+            <option value="petition">Ходатайство</option>
+            <option value="letter">Письмо</option>
+          </select>
+        </div>
+      </div>
 
-  <footer>
-    &copy; 2024 Проект "Бюрократ". Документы формируются с учетом законодательства РФ и региональных нормативных актов.
-  </footer>
+      <label for="fio">ФИО</label>
+      <input id="fio" type="text" placeholder="Иванов Иван Иванович" required>
+
+      <label for="address">Адрес</label>
+      <input id="address" type="text" placeholder="г. ... , ул. ... , д. ..." required>
+
+      <label for="recipient">Кому адресовано</label>
+      <input id="recipient" type="text" placeholder="В Администрацию муниципального образования ..." required>
+
+      <label for="subject">Тема</label>
+      <input id="subject" type="text" placeholder="О необходимости ..." required>
+
+      <label for="body">Суть обращения</label>
+      <textarea id="body" placeholder="Опишите обстоятельства, просьбу, требование или запрос..." required></textarea>
+
+      <label for="legalBases">Нормативные основания (вставьте проверенный список, если нужен)</label>
+      <textarea id="legalBases" placeholder="Например: 1. ...&#10;2. ..."></textarea>
+
+      <div class="actions">
+        <button type="submit">Сформировать</button>
+        <a href="#" id="downloadDocx" class="btn secondary" style="display:none;">Скачать Word</a>
+        <a href="#" id="downloadPdf" class="btn secondary" style="display:none;">Скачать PDF</a>
+      </div>
+    </form>
+
+    <pre id="preview" style="display:none;"></pre>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
-    // Пример шаблона письма с вставкой региональных ссылок на законодательство
-    const legislationLinks = {
-      moscow: {
-        name: "Москва",
-        laws: [
-          "Федеральный закон РФ №131-ФЗ от 06.10.2003 «Об общих принципах организации местного самоуправления в Российской Федерации»",
-          "Правила содержания и благоустройства территорий города Москвы, утв. Постановлением Правительства Москвы № 562-ПП от 25.07.2018"
-        ]
-      },
-      tatarstan: {
-        name: "Республика Татарстан",
-        laws: [
-          "Федеральный закон РФ №131-ФЗ от 06.10.2003",
-          "Закон Республики Татарстан «Об охране и использовании земельных ресурсов», № 23-ЗРТ от 15.05.2012"
-        ]
-      },
-      lenoblast: {
-        name: "Ленинградская область",
-        laws: [
-          "Федеральный закон РФ №131-ФЗ от 06.10.2003",
-          "Постановление Правительства Ленинградской области № 65 от 12.02.2016"
-        ]
-      },
-      novosibirsk: {
-        name: "Новосибирская область",
-        laws: [
-          "Федеральный закон РФ №131-ФЗ от 06.10.2003",
-          "Закон Новосибирской области «О благоустройстве населенных пунктов», № 229-ОЗ от 20.03.2015"
-        ]
-      }
+    const { Document, Packer, Paragraph, TextRun } = window.docx;
+    const { jsPDF } = window.jspdf;
+
+    const typeTitles = {
+      statement: "ЗАЯВЛЕНИЕ",
+      complaint: "ЖАЛОБА",
+      request: "ЗАПРОС",
+      appeal: "ОБРАЩЕНИЕ",
+      petition: "ХОДАТАЙСТВО",
+      letter: "ПИСЬМО"
     };
 
-    document.getElementById('requestForm').addEventListener('submit', function(e) {
+    function getDocText(data) {
+      const legalBlock = data.legalBases.trim()
+        ? data.legalBases.trim()
+        : "Нормативные основания: ________________________________";
+
+      return `
+${data.fio}
+Адрес: ${data.address}
+
+${data.recipient}
+
+${typeTitles[data.docType] || "ОБРАЩЕНИЕ"}
+
+Тема: ${data.subject}
+
+${data.body}
+
+${legalBlock}
+
+Регион: ${data.regionName}
+Дата: ${new Date().toLocaleDateString("ru-RU")}
+
+Подпись: ______________________
+      `.trim();
+    }
+
+    function createDocxBlob(text) {
+      const paragraphs = text.split("\n").map(line =>
+        new Paragraph({ children: [new TextRun(line)] })
+      );
+
+      const doc = new Document({
+        sections: [{ children: paragraphs }]
+      });
+
+      return Packer.toBlob(doc);
+    }
+
+    function createPdfBlob(text) {
+      const pdf = new jsPDF({ unit: "pt", format: "a4" });
+      pdf.setFont("Times", "normal");
+      pdf.setFontSize(12);
+
+      const margin = 40;
+      const maxWidth = 515;
+      const lines = pdf.splitTextToSize(text, maxWidth);
+      pdf.text(lines, margin, margin);
+
+      return pdf.output("blob");
+    }
+
+    const regionSelect = document.getElementById("region");
+    const regionNameByValue = {};
+    [...regionSelect.options].forEach(opt => {
+      if (opt.value) regionNameByValue[opt.value] = opt.textContent;
+    });
+
+    document.getElementById("docForm").addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const regionKey = document.getElementById('region').value;
-      const userName = document.getElementById('userName').value.trim();
-      const userAddress = document.getElementById('userAddress').value.trim();
-      const cemeteryName = document.getElementById('cemeteryName').value.trim();
+      const data = {
+        region: regionSelect.value,
+        regionName: regionNameByValue[regionSelect.value] || "",
+        docType: document.getElementById("docType").value,
+        fio: document.getElementById("fio").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        recipient: document.getElementById("recipient").value.trim(),
+        subject: document.getElementById("subject").value.trim(),
+        body: document.getElementById("body").value.trim(),
+        legalBases: document.getElementById("legalBases").value.trim()
+      };
 
-      if (!regionKey || !userName || !userAddress || !cemeteryName) {
-        alert("Пожалуйста, заполните все поля.");
-        return;
-      }
+      const text = getDocText(data);
 
-      const region = legislationLinks[regionKey];
+      const preview = document.getElementById("preview");
+      preview.style.display = "block";
+      preview.textContent = text;
 
-      // Формируем текст обращения на основе данных
-      let letterText = `
-${userName}
-Адрес: ${userAddress}
+      const docxBlob = await createDocxBlob(text);
+      const pdfBlob = await createPdfBlob(text);
 
-В администрацию муниципального образования ${region.name}
+      const docxUrl = URL.createObjectURL(docxBlob);
+      const pdfUrl = URL.createObjectURL(pdfBlob);
 
-Заявление
+      const docxLink = document.getElementById("downloadDocx");
+      const pdfLink = document.getElementById("downloadPdf");
 
-Прошу произвести очистку кладбища "${cemeteryName}" от поваленных деревьев, представляющих угрозу безопасности и ухудшающих санитарное состояние территории.
+      docxLink.href = docxUrl;
+      docxLink.download = `obraschenie_${data.docType}.docx`;
+      docxLink.style.display = "inline-block";
 
-Данное обращение основано на следующих нормативных актах:
-
-${region.laws.map((law, i) => `${i+1}. ${law}`).join('\n')}
-
-Прошу принять меры в соответствии с действующим законодательством Российской Федерации и нормативными актами ${region.name}.
-
-Дата: ${new Date().toLocaleDateString('ru-RU')}
-Подпись: _____________________
-      `.trim();
-
-      const outputDiv = document.getElementById('letterOutput');
-      outputDiv.textContent = letterText;
-      outputDiv.hidden = false;
-
-      // Здесь можно добавить логику для генерации Word и PDF,
-      // например, использование библиотек jsPDF, docx.js или отправка на сервер.
+      pdfLink.href = pdfUrl;
+      pdfLink.download = `obraschenie_${data.docType}.pdf`;
+      pdfLink.style.display = "inline-block";
     });
   </script>
 </body>
