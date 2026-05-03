@@ -1,239 +1,172 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>БЮРОКРАТ | Система управления процессами</title>
-    <style>
-        :root {
-            --bg-main: #f8f9fa;
-            --sidebar-bg: #ffffff;
-            --accent-blue: #0052cc;
-            --text-primary: #172b4d;
-            --text-secondary: #6b778c;
-            --border-color: #dfe1e6;
-            --success: #36b37e;
-        }
-
-        * { box-sizing: border-box; }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            display: flex;
-            height: 100vh;
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-        }
-
-        /* Боковая панель */
-        .sidebar {
-            width: 260px;
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-        }
-
-        .logo-area {
-            font-weight: 800;
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-            margin-bottom: 40px;
-            color: var(--accent-blue);
-            text-transform: uppercase;
-        }
-
-        nav { display: flex; flex-direction: column; gap: 10px; }
-
-        .nav-item {
-            padding: 12px 15px;
-            text-decoration: none;
-            color: var(--text-secondary);
-            border-radius: 6px;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .nav-item:hover { background: #ebecf0; color: var(--text-primary); }
-        .nav-item.active { background: #deebff; color: var(--accent-blue); font-weight: 600; }
-
-        /* Основной контент */
-        .content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 40px;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        h1 { margin: 0; font-size: 1.8rem; font-weight: 600; }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .card {
-            background: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .card-label { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; }
-        .card-value { font-size: 1.5rem; font-weight: 700; margin-top: 10px; }
-
-        /* Таблица / Список */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-
-        .data-table th {
-            text-align: left;
-            background: #f4f5f7;
-            padding: 15px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .data-table td {
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.95rem;
-        }
-
-        .status-pill {
-            padding: 4px 8px;
-            border-radius: 3px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .status-active { background: #e3fcef; color: #006644; }
-        .status-pending { background: #fff7e6; color: #824d00; }
-
-        .action-btn {
-            background: var(--accent-blue);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .hidden { display: none; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Проект "Бюрократ" — Составление обращения в администрацию</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background-color: #f7f7f7;
+      color: #222;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    select, input[type="text"], textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.7rem 1.2rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background-color: #004aad;
+      color: white;
+    }
+    .output {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+      font-family: Consolas, monospace;
+    }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #555;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+  <h1>Проект "Бюрократ"</h1>
+  <p>Составьте образец письма в местную администрацию для очистки кладбища от поваленных деревьев.</p>
 
-    <aside class="sidebar">
-        <div class="logo-area">БЮРОКРАТ</div>
-        <nav>
-            <div class="nav-item active" onclick="showSection('overview', this)">Обзор системы</div>
-            <div class="nav-item" onclick="showSection('documents', this)">Реестр документов</div>
-            <div class="nav-item" onclick="showSection('analytics', this)">Аналитика</div>
-            <div class="nav-item" onclick="showSection('settings', this)">Настройки</div>
-        </nav>
-    </aside>
+  <form id="requestForm">
+    <label for="region">Выберите регион:</label>
+    <select id="region" name="region" required>
+      <option value="" disabled selected>-- Выберите регион --</option>
+      <option value="moscow">Москва</option>
+      <option value="tatarstan">Республика Татарстан</option>
+      <option value="lenoblast">Ленинградская область</option>
+      <option value="novosibirsk">Новосибирская область</option>
+      <!-- Можно добавить больше регионов -->
+    </select>
 
-    <main class="content">
-        <div id="overview" class="section">
-            <header>
-                <h1>Обзор процессов</h1>
-                <button class="action-btn" onclick="alert('Запуск нового процесса...')">Создать объект</button>
-            </header>
+    <label for="userName">Ваше ФИО:</label>
+    <input type="text" id="userName" name="userName" placeholder="Иванов Иван Иванович" required />
 
-            <div class="stats-grid">
-                <div class="card">
-                    <div class="card-label">Активные задачи</div>
-                    <div class="card-value">12</div>
-                </div>
-                <div class="card">
-                    <div class="card-label">На согласовании</div>
-                    <div class="card-value">5</div>
-                </div>
-                <div class="card">
-                    <div class="card-label">Среднее время</div>
-                    <div class="card-value">4.2 ч.</div>
-                </div>
-            </div>
+    <label for="userAddress">Ваш адрес:</label>
+    <input type="text" id="userAddress" name="userAddress" placeholder="ул. Пушкина, д. 10, кв. 5" required />
 
-            <h3>Последние изменения</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Наименование объекта</th>
-                        <th>Статус</th>
-                        <th>Дата</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>#00124</td>
-                        <td>Проверка входящей корреспонденции</td>
-                        <td><span class="status-pill status-active">Активен</span></td>
-                        <td>03.05.2026</td>
-                    </tr>
-                    <tr>
-                        <td>#00123</td>
-                        <td>Анализ ресурсной базы</td>
-                        <td><span class="status-pill status-pending">Ожидание</span></td>
-                        <td>02.05.2026</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <label for="cemeteryName">Наименование кладбища:</label>
+    <input type="text" id="cemeteryName" name="cemeteryName" placeholder="Пример: Городское кладбище №3" required />
 
-        <div id="documents" class="section hidden">
-            <h1>Реестр документов</h1>
-            <p>Здесь будет логика управления файлами и записями проекта.</p>
-        </div>
+    <button type="submit">Сформировать макет письма</button>
+  </form>
 
-        <div id="analytics" class="section hidden">
-            <h1>Аналитика</h1>
-            <p>Визуализация эффективности работы системы.</p>
-        </div>
+  <div class="output" id="letterOutput" hidden></div>
 
-        <div id="settings" class="section hidden">
-            <h1>Настройки</h1>
-            <p>Конфигурация параметров проекта «Бюрократ».</p>
-        </div>
-    </main>
+  <footer>
+    &copy; 2024 Проект "Бюрократ". Документы формируются с учетом законодательства РФ и региональных нормативных актов.
+  </footer>
 
-    <script>
-        function showSection(sectionId, element) {
-            // Скрываем все секции
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            // Убираем активный класс у навигации
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            // Показываем нужную
-            document.getElementById(sectionId).classList.remove('hidden');
-            element.classList.add('active');
-        }
-    </script>
+  <script>
+    // Пример шаблона письма с вставкой региональных ссылок на законодательство
+    const legislationLinks = {
+      moscow: {
+        name: "Москва",
+        laws: [
+          "Федеральный закон РФ №131-ФЗ от 06.10.2003 «Об общих принципах организации местного самоуправления в Российской Федерации»",
+          "Правила содержания и благоустройства территорий города Москвы, утв. Постановлением Правительства Москвы № 562-ПП от 25.07.2018"
+        ]
+      },
+      tatarstan: {
+        name: "Республика Татарстан",
+        laws: [
+          "Федеральный закон РФ №131-ФЗ от 06.10.2003",
+          "Закон Республики Татарстан «Об охране и использовании земельных ресурсов», № 23-ЗРТ от 15.05.2012"
+        ]
+      },
+      lenoblast: {
+        name: "Ленинградская область",
+        laws: [
+          "Федеральный закон РФ №131-ФЗ от 06.10.2003",
+          "Постановление Правительства Ленинградской области № 65 от 12.02.2016"
+        ]
+      },
+      novosibirsk: {
+        name: "Новосибирская область",
+        laws: [
+          "Федеральный закон РФ №131-ФЗ от 06.10.2003",
+          "Закон Новосибирской области «О благоустройстве населенных пунктов», № 229-ОЗ от 20.03.2015"
+        ]
+      }
+    };
+
+    document.getElementById('requestForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const regionKey = document.getElementById('region').value;
+      const userName = document.getElementById('userName').value.trim();
+      const userAddress = document.getElementById('userAddress').value.trim();
+      const cemeteryName = document.getElementById('cemeteryName').value.trim();
+
+      if (!regionKey || !userName || !userAddress || !cemeteryName) {
+        alert("Пожалуйста, заполните все поля.");
+        return;
+      }
+
+      const region = legislationLinks[regionKey];
+
+      // Формируем текст обращения на основе данных
+      let letterText = `
+${userName}
+Адрес: ${userAddress}
+
+В администрацию муниципального образования ${region.name}
+
+Заявление
+
+Прошу произвести очистку кладбища "${cemeteryName}" от поваленных деревьев, представляющих угрозу безопасности и ухудшающих санитарное состояние территории.
+
+Данное обращение основано на следующих нормативных актах:
+
+${region.laws.map((law, i) => `${i+1}. ${law}`).join('\n')}
+
+Прошу принять меры в соответствии с действующим законодательством Российской Федерации и нормативными актами ${region.name}.
+
+Дата: ${new Date().toLocaleDateString('ru-RU')}
+Подпись: _____________________
+      `.trim();
+
+      const outputDiv = document.getElementById('letterOutput');
+      outputDiv.textContent = letterText;
+      outputDiv.hidden = false;
+
+      // Здесь можно добавить логику для генерации Word и PDF,
+      // например, использование библиотек jsPDF, docx.js или отправка на сервер.
+    });
+  </script>
 </body>
 </html>
